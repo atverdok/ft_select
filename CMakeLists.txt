@@ -3,5 +3,10 @@ project(ft_select)
 
 set(CMAKE_C_STANDARD 99)
 
-set(SOURCE_FILES srcs/main.c includes/ft_select.h)
+set(SOURCE_FILES
+        includes/ft_select.h
+        srcs/main.c
+        srcs/util_mode_terminal.c
+        )
+
 add_executable(ft_select ${SOURCE_FILES})
