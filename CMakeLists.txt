@@ -10,3 +10,5 @@ set(SOURCE_FILES
         )
 
 add_executable(ft_select ${SOURCE_FILES})
+#target_link_libraries(ft_select ${CMAKE_SOURCE_DIR}/libft/libft.a)
+target_link_libraries(ft_select ${CMAKE_SOURCE_DIR}/libft/libft.a -lncurses -ltermcap)
