@@ -29,5 +29,3 @@ int 		get_term_size(t_main *main_struct)
 	}
 	return (0);
 }
-
-t_main
