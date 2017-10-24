@@ -12,33 +12,58 @@
 
 #include "../includes/ft_select.h"
 
-void	reset_input_mode(void)
+void	reset_input_mode(t_main *main_struct)
 {
-	tcsetattr(STDIN_FILENO, TCSANOW, &g_saved_attributes);
+	make_command("te");
+	make_command("ve");
+	tcsetattr(STDIN_FILENO, TCSANOW, &main_struct->saved_attributes);
 }
 
-void	save_attributes(void)
+void	save_attributes(t_main *main_struct)
 {
 	if (!isatty(STDIN_FILENO))
 	{
 		ft_putstr_fd("Not a terminal.\n", 2);
 		exit(EXIT_FAILURE);
 	}
-	tcgetattr(STDIN_FILENO, &g_saved_attributes);
+	tcgetattr(STDIN_FILENO, &main_struct->saved_attributes);
+}
+
+void init_terminal_data(void)
+{
+	char *termtype;
+	char term_buffer[1024];
+	int success;
+
+	termtype = getenv("TERM");
+	if (termtype == 0)
+	{
+		ft_putstr_fd("Specify a terminal type with `setenv TERM <yourtype>'.\n",
+					 2);
+		exit(EXIT_FAILURE);
+	}
+	success = tgetent(term_buffer, termtype);
+	if (success < 1)
+	{
+		if (success < 0)
+			ft_putstr_fd("Could not access the termcap data base.\n", 2);
+		else if (success == 0)
+			ft_putstr_fd("Terminal type `%s' is not defined.\n", 2);
+		exit(EXIT_FAILURE);
+	}
 }
 
 void	set_input_mode(void)
 {
 	struct termios tattr;
 
-	if (!isatty(STDIN_FILENO))
-	{
-		ft_putstr_fd("Not a terminal.\n", 2);
-		exit(EXIT_FAILURE);
-	}
+	init_terminal_data();
 	tcgetattr(STDIN_FILENO, &tattr);
-	tattr.c_lflag &= ~(ICANON | ECHO | ISIG);
+	tattr.c_lflag &= ~(ICANON | ECHO);
 	tattr.c_cc[VMIN] = 1;
 	tattr.c_cc[VTIME] = 0;
 	tcsetattr(STDIN_FILENO, TCSANOW, &tattr);
+	make_command("os");
+	make_command("vi");
+	make_command("ti");
 }

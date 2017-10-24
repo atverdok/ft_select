@@ -7,7 +7,7 @@ set(SOURCE_FILES
         includes/ft_select.h
         srcs/main.c
         srcs/util_mode_terminal.c
-        )
+        srcs/util_linkedlist.c srcs/util_termcap.c)
 
 add_executable(ft_select ${SOURCE_FILES})
 #target_link_libraries(ft_select ${CMAKE_SOURCE_DIR}/libft/libft.a)
