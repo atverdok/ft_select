@@ -49,3 +49,11 @@ t_arg_node	*get_index(t_arg_node *list, int index)
 	tmp = list;
 	return (tmp);
 }
+
+t_main		*init_main_struct(void)
+{
+	t_main *tmp;
+
+	tmp = ft_memalloc(sizeof(t_main));
+	return (tmp);
+}

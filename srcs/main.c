@@ -17,6 +17,15 @@ void	del_quote(char **str)
 	}
 }
 
+t_main		*store_t_main_struct(t_main *main_struct)
+{
+	static t_main *store = NULL;
+
+	if (store == NULL && main_struct)
+		store = main_struct;
+	return (store);
+}
+
 t_arg_node *parse_arg(int argc, char **argv)
 {
 	int i;
@@ -43,33 +52,27 @@ void	set_terminal(t_main *main_struct)
 	set_input_mode();
 }
 
-void	print_list(t_main *main_struct, int key)
-{
-	t_arg_node *list;
-
-	list = main_struct->head;
-	while (list)
-	{
-        if (!key)
-            ft_putendl(list->value);
-        else if (key && list->select)
-            ft_putendl(list->value);    
-		list = list->next;
-	}
-}
-
 void	make_select(t_main *main_struct)
 {
 	char buf[8];
 
-	print_list(main_struct, 0);
+	print_list(main_struct);
 	ft_bzero(buf, 8);
 	while (read(STDIN_FILENO, buf, 8))
 	{
-		if (!ft_strcmp(buf, KEY_ESC))
-            break ;
-        ft_bzero(buf, 8);
-    }
+		if (!ft_strcmp(buf, KEY_DOWN))
+			move_down();
+		else if (!ft_strcmp(buf, KEY_UP))
+			move_up();
+		else if (!ft_strcmp(buf, KEY_SPACE))
+		{
+			select_elem();
+			move_down();
+		}
+		else if (!ft_strcmp(buf, KEY_ESC))
+			break ;
+		ft_bzero(buf, 8);
+	}
 }
 
 int     main(int argc, char **argv)
@@ -83,12 +86,15 @@ int     main(int argc, char **argv)
 	else
 	{
 		args = parse_arg(argc, argv);
-		main_struct = ft_memalloc(sizeof(t_main));
+		main_struct = store_t_main_struct(init_main_struct());
 		main_struct->head = args;
+		main_struct->curr = main_struct->head;
 		save_attributes(main_struct);
 		set_terminal(main_struct);
+		main_struct->total_nodes++;
 		while (args->next)
 		{
+			main_struct->total_nodes++;
 			if (ft_strlen(args->value) > main_struct->max_len)
 				main_struct->max_len = ft_strlen(args->value);
 			args = args->next;
@@ -97,7 +103,6 @@ int     main(int argc, char **argv)
 		get_term_size(main_struct);
         make_select(main_struct);
         reset_input_mode(main_struct);
-        print_list(main_struct, 1);
 	}
 	return (0);
 }

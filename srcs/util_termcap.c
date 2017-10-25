@@ -12,6 +12,7 @@ static int tcap_putchar(int c)
 int 		make_command(char *command)
 {
 	char	*tmp;
+
 	if ((tmp = tgetstr(command, NULL)) == NULL)
 		return (1);
 	tputs(tmp, 0, tcap_putchar);
@@ -27,5 +28,16 @@ int 		get_term_size(t_main *main_struct)
 		main_struct->li = tgetnum("li");
 		return (1);
 	}
+	return (0);
+}
+
+int 		make_tgoto(char *command, int co, int li)
+{
+	char *tmp;
+
+	if ((tmp = tgetstr(command, NULL)) == NULL)
+		return (1);
+	tmp = tgoto(tmp, co, li);
+	tputs(tmp, 0, tcap_putchar);
 	return (0);
 }
