@@ -12,20 +12,12 @@
 # include <termios.h>
 
 # include "../libft/libft.h"
+# include "./defines.h"
 
 //pid_t	g_pid;
 //struct termios	g_saved_attributes;
 
 // buf[0] + buf[1] + buf[2] + buf[3] + buf[4]
-
-# define KEY_RIGHT 185
-# define KEY_LEFT 186
-# define KEY_UP 183
-# define KEY_DOWN 184
-# define KEY_DELETE 295
-# define KEY_BACKSPACE 127
-# define KEY_SPACE 32
-# define KEY_ESC 27
 
 typedef struct s_in_arg
 {

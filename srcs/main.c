@@ -63,10 +63,10 @@ void	make_select(t_main *main_struct)
 	char buf[8];
 
 	print_list(main_struct, 0);
+	ft_bzero(buf, 8);
 	while (read(STDIN_FILENO, buf, 8))
 	{
-//		if (buf[0] == 27 && buf[1] == 0)
-		if ((buf[0] + buf[1] + buf[2] + buf[3] + buf[4]) == KEY_ESC)
+		if (!ft_strcmp(buf, KEY_ESC))
             break ;
         ft_bzero(buf, 8);
     }
