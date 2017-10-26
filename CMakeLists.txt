@@ -10,7 +10,10 @@ set(SOURCE_FILES
         srcs/util_linkedlist.c
         srcs/util_termcap.c
         includes/defines.h
-        srcs/util_print.c srcs/move_elem.c)
+        srcs/util_print.c
+        srcs/move_elem.c
+        srcs/del_node.c
+        )
 
 add_executable(ft_select ${SOURCE_FILES})
 #target_link_libraries(ft_select ${CMAKE_SOURCE_DIR}/libft/libft.a)

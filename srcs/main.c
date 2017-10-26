@@ -56,7 +56,8 @@ void	make_select(t_main *main_struct)
 {
 	char buf[8];
 
-	print_list(main_struct);
+//	print_list(main_struct);
+	make_str();
 	ft_bzero(buf, 8);
 	while (read(STDIN_FILENO, buf, 8))
 	{
@@ -64,6 +65,12 @@ void	make_select(t_main *main_struct)
 			move_down();
 		else if (!ft_strcmp(buf, KEY_UP))
 			move_up();
+		else if (!ft_strcmp(buf, KEY_LEFT))
+			move_left();
+		else if (!ft_strcmp(buf, KEY_RIGHT))
+			move_right();
+		else if (!ft_strcmp(buf, KEY_BACKSPACE) || !ft_strcmp(buf, KEY_DELETE))
+			del_elem();
 		else if (!ft_strcmp(buf, KEY_SPACE))
 		{
 			select_elem();
@@ -99,6 +106,7 @@ int     main(int argc, char **argv)
 				main_struct->max_len = ft_strlen(args->value);
 			args = args->next;
 		}
+		main_struct->shift = 1;
 		main_struct->tail = args;
 		get_term_size(main_struct);
         make_select(main_struct);

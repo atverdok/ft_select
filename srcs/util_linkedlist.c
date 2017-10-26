@@ -32,21 +32,24 @@ void		push_list(t_arg_node **list, char *value)
 	}
 }
 
-t_arg_node	*get_index(t_arg_node *list, int index)
+t_arg_node	*get_index(t_arg_node *list, int old_index, int new_index)
 {
 	t_arg_node *tmp;
 
-	if (index < list->index && index >= 0)
-	{
-		while (list->prew && list->index != index)
-			list = list->prew;
-	}
-	else if (index > list->index && list->next)
-	{
-		while (list->prew && list->index != index)
-			list = list->next;
-	}
 	tmp = list;
+	while (old_index != new_index)
+	{
+		if (old_index < new_index)
+		{
+			tmp = tmp->next;
+			old_index++;
+		}
+		else if (old_index > new_index)
+		{
+			tmp = tmp->prew;
+			old_index--;
+		}
+	}
 	return (tmp);
 }
 
@@ -56,4 +59,10 @@ t_main		*init_main_struct(void)
 
 	tmp = ft_memalloc(sizeof(t_main));
 	return (tmp);
+}
+
+void		del_node(t_arg_node **delete)
+{
+	ft_strdel(&(*delete)->value);
+	ft_memdel((void *)delete);
 }

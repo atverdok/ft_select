@@ -6,15 +6,12 @@
 
 void	print_selected(t_arg_node *node)
 {
-	ft_putstr("\e[4m");
+	make_command("us");
 	if (node->select)
-	{
-		ft_putstr("\e[7m");
+		print_inverted(node->value);
+	else
 		ft_putstr(node->value);
-		ft_putstr("\e[27m");
-	} else
-		ft_putstr(node->value);
-	ft_putstr("\e[24m");
+	make_command("ue");
 }
 
 void	unset_mark()
@@ -22,8 +19,7 @@ void	unset_mark()
 	t_main *store;
 
 	store = store_t_main_struct(NULL);
-		make_tgoto("cm", (store->index_cur / store->li),
-				   (store->index_cur % store->li));
+	mov_elem(store);
 	if (store->curr->select)
 		print_inverted(store->curr->value);
 	else
@@ -32,68 +28,32 @@ void	unset_mark()
 
 void	print_inverted(char *name)
 {
-	ft_putstr("\e[7m");
+	make_command("so");
 	ft_putstr(name);
-	ft_putstr("\e[27m");
+	make_command("se");
 }
 
 void	make_str(void)
 {
 	t_main *store;
-	int col;
-	int row;
-	int fill = 1;
-	char **out;
+	t_arg_node *node;
+	int i;
 
 	store = store_t_main_struct(NULL);
-
-	col = (int)(store->co / (store->max_len + fill));
-	row = (store->total_nodes / col) + (store->total_nodes % col);
-	out = (char **)ft_memalloc(sizeof(char *) * row);
-
-	int i = -1;
-	while (++i < row)
-	{
-		out[i] = (char *)malloc(sizeof(char) * ((store->max_len * col) + (col * fill - 1)));
-		ft_memset(out[i], ' ', (store->max_len * col));
-		out[i][((store->max_len * col) + (col * fill - 1))] = '\0';
-	}
-	i = -1;
-
-	t_arg_node *node;
-	int j = 0;
 	node = store->head;
-	while (++i < row && node)
+	i = 0;
+	while (node)
 	{
-		ft_memcpy((out[i] + ((store->max_len + fill) * j)), node->value, ft_strlen(node->value));
-		if (i == (row - 1) && (j < col))
-		{
-			j++;
-			i = -1;
-		}
+		mov_elem(store);
+		count_shift(1);
+		if (store->under == i)
+			print_selected(node);
+		else if (node->select)
+			print_inverted(node->value);
+		else
+			ft_putstr(node->value);
 		node = node->next;
+		i++;
 	}
-	i = -1;
-	while (++i < row)
-		ft_putendl(out[i]);
-}
-
-void	print_list(t_main *main_struct)
-{
-	make_str();
-
-//	t_arg_node *list;
-//
-//	list = main_struct->head;
-//	while (list)
-//	{
-//		if (list->prew == NULL)
-//		{
-//			print_selected(list);
-//			ft_putchar('\n');
-//		}
-//		else
-//			ft_putendl(list->value);
-//		list = list->next;
-//	}
+	store->index_cur = 0;
 }
