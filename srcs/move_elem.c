@@ -4,10 +4,10 @@
 
 #include "../includes/ft_select.h"
 
-void	mov_elem(t_main *main_struct)
+void	count_and_mov_elem(t_main *main_struct)
 {
-	make_tgoto("cm", ((main_struct->max_len + main_struct->shift) *
-					   (main_struct->index_cur / main_struct->li)),
+	make_tgoto("cm", (int)((main_struct->max_len + main_struct->shift) *
+						   (main_struct->index_cur / main_struct->li)),
 			   (main_struct->index_cur % main_struct->li));
 }
 
@@ -28,7 +28,7 @@ void	move_down(void)
 	store = store_t_main_struct(NULL);
 	unset_mark();
 	count_shift(1);
-	mov_elem(store);
+	count_and_mov_elem(store);
 
 	store->curr = (store->curr->next) ? store->curr->next : store->head;
 	print_selected(store->curr);
@@ -41,7 +41,7 @@ void	move_up(void)
 	store = store_t_main_struct(NULL);
 	unset_mark();
 	count_shift(-1);
-	mov_elem(store);
+	count_and_mov_elem(store);
 
 	store->curr = (store->curr->prew) ? store->curr->prew : store->tail;
 	print_selected(store->curr);
@@ -58,7 +58,7 @@ void	move_left(void)
 		unset_mark();
 		index = store->index_cur;
 		count_shift(-(store->li));
-		mov_elem(store);
+		count_and_mov_elem(store);
 
 		store->curr = get_index(store->curr, index, store->index_cur);
 		print_selected(store->curr);
@@ -76,7 +76,7 @@ void	move_right(void)
 		unset_mark();
 		index = store->index_cur;
 		count_shift(store->li);
-		mov_elem(store);
+		count_and_mov_elem(store);
 
 		store->curr = get_index(store->curr, index, store->index_cur);
 		print_selected(store->curr);
@@ -89,7 +89,7 @@ void	select_elem(void)
 
 	store = store_t_main_struct(NULL);
 	store->curr->select ^= 1;
-	mov_elem(store);
+	count_and_mov_elem(store);
 	if (store->curr->select)
 		print_inverted(store->curr->value);
 	else

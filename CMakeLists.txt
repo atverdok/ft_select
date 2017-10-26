@@ -13,7 +13,7 @@ set(SOURCE_FILES
         srcs/util_print.c
         srcs/move_elem.c
         srcs/del_node.c
-        )
+        srcs/util_signals.c)
 
 add_executable(ft_select ${SOURCE_FILES})
 #target_link_libraries(ft_select ${CMAKE_SOURCE_DIR}/libft/libft.a)

@@ -92,6 +92,7 @@ int     main(int argc, char **argv)
 		;
 	else
 	{
+		catch_signals();
 		args = parse_arg(argc, argv);
 		main_struct = store_t_main_struct(init_main_struct());
 		main_struct->head = args;

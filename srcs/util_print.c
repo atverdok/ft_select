@@ -19,7 +19,7 @@ void	unset_mark()
 	t_main *store;
 
 	store = store_t_main_struct(NULL);
-	mov_elem(store);
+	count_and_mov_elem(store);
 	if (store->curr->select)
 		print_inverted(store->curr->value);
 	else
@@ -44,7 +44,7 @@ void	make_str(void)
 	i = 0;
 	while (node)
 	{
-		mov_elem(store);
+		count_and_mov_elem(store);
 		count_shift(1);
 		if (store->under == i)
 			print_selected(node);

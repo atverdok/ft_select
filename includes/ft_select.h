@@ -84,12 +84,18 @@ void	move_left(void);
 void	move_right(void);
 
 void	select_elem(void);
-void	mov_elem(t_main *main_struct);
+//int	count_and_mov_elem(t_main *main_struct);
+void	count_and_mov_elem(t_main *main_struct);
 void	count_shift(int shift_elem);
 
 /*
 ** del_node.c
 */
 void	del_elem(void);
+
+/*
+** util_signals.c
+*/
+void	catch_signals(void);
 
 #endif
