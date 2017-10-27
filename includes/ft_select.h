@@ -31,6 +31,7 @@ typedef struct s_main
 	int             under;
 	int 			shift;
 	size_t			max_len;
+	size_t 			last_len;
 	struct termios	saved_attributes;
 	t_arg_node		*head;
 	t_arg_node		*curr;
@@ -82,11 +83,14 @@ void	move_down(void);
 void	move_up(void);
 void	move_left(void);
 void	move_right(void);
+int count_col(int index);
 
 void	select_elem(void);
-//int	count_and_mov_elem(t_main *main_struct);
-void	count_and_mov_elem(t_main *main_struct);
+//void	mov_elem(t_main *main_struct);
+void	mov_elem(t_main *main_struct, int index);
+//int	mov_elem(t_main *main_struct);
 void	count_shift(int shift_elem);
+void 	max_last_len(void);
 
 /*
 ** del_node.c

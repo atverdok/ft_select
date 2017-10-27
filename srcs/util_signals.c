@@ -29,14 +29,16 @@ void		handler(int sig)
 //	else
 	if (sig == SIGWINCH)
 	{
+
 		get_term_size(store);
+		max_last_len();
+		make_tgoto("cm", 0, 0);
 		make_command("cl");
-//		if (((store->co * store->li) - (store->total_nodes * (store->max_len + store->shift))) < (store->total_nodes * (store->max_len + store->shift))
-		if (((store->co * store->li) - (store->total_nodes * (store->max_len + store->shift)) < 5)
-				|| store->co < store->max_len)
-			ft_putstr("NO SPACE");
-		else
+
+		if ((store->last_len + count_col(store->total_nodes - 1)) < store->co)
 			make_str();
+		else
+			ft_putstr("NO SPACE");
 	}
 }
 
