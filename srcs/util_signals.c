@@ -17,9 +17,10 @@ int 		we(void)
 
 void		handler(int sig)
 {
-	t_main *store;
+	// t_main *store;
 
-	store = store_t_main_struct(NULL);
+	// store = store_t_main_struct(NULL);
+
 //	if (sig == SIGTSTP)
 //		pause_process();
 //	else if (sig == SIGCONT)
@@ -29,18 +30,7 @@ void		handler(int sig)
 //		exit_program();
 //	else
 	if (sig == SIGWINCH)
-	{
-
-		get_term_size(store);
-		max_last_len();
-		make_tgoto("cm", 0, 0);
-		make_command("cl");
-
-		if ((store->last_len + count_col(store->total_nodes - 1)) < store->co)
-			make_str();
-		else
-			ft_putstr("NO SPACE");
-	}
+		make_str();
 }
 
 void		catch_signals(void)

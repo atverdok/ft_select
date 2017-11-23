@@ -56,7 +56,6 @@ void	make_select(t_main *main_struct)
 {
 	char buf[8];
 
-//	print_list(main_struct);
 	make_str();
 	ft_bzero(buf, 8);
 	while (read(STDIN_FILENO, buf, 8))
@@ -80,6 +79,28 @@ void	make_select(t_main *main_struct)
 			break ;
 		ft_bzero(buf, 8);
 	}
+}
+
+void	print_select(t_arg_node *head)
+{
+	t_arg_node	*tmp;
+	char		flag;
+
+	tmp = head;
+	flag = 0;
+	while (tmp!= NULL)
+	{
+		if (tmp->select)
+		{
+			ft_putstr(tmp->value);
+			ft_putchar(' ');
+			if (!flag)
+				flag = 1;
+		}
+		tmp = tmp->next;
+	}
+	if (flag)
+		ft_putchar('\n');
 }
 
 int     main(int argc, char **argv)
@@ -107,11 +128,12 @@ int     main(int argc, char **argv)
 				main_struct->max_len = ft_strlen(args->value);
 			args = args->next;
 		}
-		main_struct->shift = 1;
+		main_struct->shift = 3;
 		main_struct->tail = args;
 		get_term_size(main_struct);
         make_select(main_struct);
         reset_input_mode(main_struct);
+		print_select(main_struct->head);
 	}
 	return (0);
 }

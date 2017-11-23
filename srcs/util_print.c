@@ -42,10 +42,10 @@ void	make_str(void)
 	store = store_t_main_struct(NULL);
 	node = store->head;
 	i = 0;
-	max_last_len();
-	make_tgoto("cm", 0, 0);
-	while (node)
+	if (is_space())
 	{
+		while (node)
+		{			
 			mov_elem(store, i);
 			count_shift(1);
 			if (store->under == i)
@@ -56,5 +56,22 @@ void	make_str(void)
 				ft_putstr(node->value);
 			node = node->next;
 			i++;
+		}
 	}
+	else
+		ft_putstr("NO SPACE");
+}
+
+int	is_space(void)
+{
+	t_main *store;
+
+	store = store_t_main_struct(NULL);
+	get_term_size(store);
+	max_last_len();
+	make_tgoto("cm", 0, 0);
+	make_command("cl");
+	if ((store->last_len + count_col(store->total_nodes - 1)) <= store->co)
+		return (1);
+	return (0);
 }

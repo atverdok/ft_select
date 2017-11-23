@@ -75,6 +75,7 @@ void	print_selected(t_arg_node *node);
 void	print_inverted(char *name);
 void	print_list(t_main *main_struct);
 void	make_str(void);
+int	is_space(void);
 
 /*
 ** move_elem.c
