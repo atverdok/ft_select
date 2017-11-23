@@ -1,0 +1,4 @@
+*.o
+*.a
+ft_select_deb
+ft_select
