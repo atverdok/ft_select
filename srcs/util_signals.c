@@ -2,6 +2,7 @@
 // Created by Aleksey Tverdokhleb on 10/26/17.
 //
 
+#include <signal.h>
 #include "../includes/ft_select.h"
 
 int 		we(void)
