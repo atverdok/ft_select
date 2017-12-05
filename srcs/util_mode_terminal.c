@@ -12,11 +12,14 @@
 
 #include "../includes/ft_select.h"
 
-void	reset_input_mode(t_main *main_struct)
+void	reset_input_mode(void)
 {
+	t_main *store;
+
+	store = store_t_main_struct(NULL);
 	make_command("te");
 	make_command("ve");
-	tcsetattr(STDIN_FILENO, TCSANOW, &main_struct->saved_attributes);
+	tcsetattr(STDIN_FILENO, TCSANOW, &store->saved_attributes);
 }
 
 void	save_attributes(t_main *main_struct)
@@ -55,14 +58,15 @@ void init_terminal_data(void)
 
 void	set_input_mode(void)
 {
-	struct termios tattr;
+	t_main *store;
 
+	store = store_t_main_struct(NULL);
 	init_terminal_data();
-	tcgetattr(STDIN_FILENO, &tattr);
-	tattr.c_lflag &= ~(ICANON | ECHO);
-	tattr.c_cc[VMIN] = 1;
-	tattr.c_cc[VTIME] = 0;
-	tcsetattr(STDIN_FILENO, TCSANOW, &tattr);
+	tcgetattr(STDIN_FILENO, &store->new_attributes);
+	store->new_attributes.c_lflag &= ~(ICANON | ECHO);
+	store->new_attributes.c_cc[VMIN] = 1;
+	store->new_attributes.c_cc[VTIME] = 0;
+	tcsetattr(STDIN_FILENO, TCSANOW, &store->new_attributes);
 	make_command("os");
 	make_command("vi");
 	make_command("ti");

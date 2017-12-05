@@ -32,6 +32,7 @@ typedef struct s_main
 	int 			shift;
 	size_t			max_len;
 	size_t 			last_len;
+	struct termios	new_attributes;
 	struct termios	saved_attributes;
 	t_arg_node		*head;
 	t_arg_node		*curr;
@@ -41,7 +42,7 @@ typedef struct s_main
 /*
 ** util_mode_terminal.c
 */
-void	reset_input_mode(t_main *main_struct);
+void	reset_input_mode(void);
 void	save_attributes(t_main *main_struct);
 void	set_input_mode(void);
 void	init_terminal_data(void);
@@ -84,12 +85,10 @@ void	move_down(void);
 void	move_up(void);
 void	move_left(void);
 void	move_right(void);
-int count_col(int index);
+int 	count_col(int index);
 
 void	select_elem(void);
-//void	mov_elem(t_main *main_struct);
 void	mov_elem(t_main *main_struct, int index);
-//int	mov_elem(t_main *main_struct);
 void	count_shift(int shift_elem);
 void 	max_last_len(void);
 
@@ -102,5 +101,6 @@ void	del_elem(void);
 ** util_signals.c
 */
 void	catch_signals(void);
+void	registr_signal_handl(void);
 
 #endif

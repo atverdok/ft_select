@@ -45,7 +45,7 @@ void	del_elem(void)
 		store->index_cur = tmp_index;
 	if (!store->total_nodes)
 	{
-		reset_input_mode(store);
+		reset_input_mode();
 		exit(0);
 	}
 }

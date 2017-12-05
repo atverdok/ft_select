@@ -47,11 +47,6 @@ t_arg_node *parse_arg(int argc, char **argv)
 	return (args);
 }
 
-void	set_terminal(t_main *main_struct)
-{
-	set_input_mode();
-}
-
 void	make_select(t_main *main_struct)
 {
 	char buf[8];
@@ -105,21 +100,22 @@ void	print_select(t_arg_node *head)
 
 int     main(int argc, char **argv)
 {
+	#include <stdio.h>
 	t_arg_node *args;
 	t_main *main_struct;
 
-	if (argc < 2)
-		// show usage
-		;
-	else
+	// if (argc < 2)
+	// 	// show usage
+	// 	;
+	if (argc > 1)
 	{
-		catch_signals();
+		printf("argv[0] %s\n", argv[0]);
 		args = parse_arg(argc, argv);
 		main_struct = store_t_main_struct(init_main_struct());
 		main_struct->head = args;
 		main_struct->curr = main_struct->head;
 		save_attributes(main_struct);
-		set_terminal(main_struct);
+		set_input_mode();
 		main_struct->total_nodes++;
 		while (args->next)
 		{
@@ -131,9 +127,12 @@ int     main(int argc, char **argv)
 		main_struct->shift = 3;
 		main_struct->tail = args;
 		get_term_size(main_struct);
-        make_select(main_struct);
-        reset_input_mode(main_struct);
+		// catch_signals();
+		registr_signal_handl();
+		make_select(main_struct);
+		reset_input_mode();
 		print_select(main_struct->head);
 	}
+	printf("\nargc: %d\n", argc);
 	return (0);
 }
